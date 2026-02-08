@@ -79,7 +79,8 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 
 // Active menu highlighting on scroll
 const sections = document.querySelectorAll("section[id]");
-const navLinks = document.querySelectorAll(".nav-links a");
+const navLinks = document.querySelectorAll(".nav .nav-links a");
+const heroNavLinks = document.querySelectorAll(".hero-actions .nav-links a");
 
 function highlightNavOnScroll() {
   const scrollPos = window.scrollY + 150;
@@ -92,6 +93,13 @@ function highlightNavOnScroll() {
     if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
       // Desktop nav
       navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#" + sectionId) {
+          link.classList.add("active");
+        }
+      });
+      // Hero icon nav
+      heroNavLinks.forEach((link) => {
         link.classList.remove("active");
         if (link.getAttribute("href") === "#" + sectionId) {
           link.classList.add("active");
@@ -110,6 +118,7 @@ function highlightNavOnScroll() {
   // Remove active if at top of page
   if (window.scrollY < 100) {
     navLinks.forEach((link) => link.classList.remove("active"));
+    heroNavLinks.forEach((link) => link.classList.remove("active"));
     mobileNavLinks.forEach((link) => link.classList.remove("active"));
   }
 }
