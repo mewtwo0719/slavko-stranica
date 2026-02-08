@@ -156,10 +156,12 @@ const testimonialsTrack = document.getElementById("testimonialsTrack");
 const testimonialDots = document.querySelectorAll("#testimonialDots .dot");
 const testimonialPrev = document.getElementById("testimonialPrev");
 const testimonialNext = document.getElementById("testimonialNext");
+const testimonialsWrapper = document.querySelector(".testimonials-wrapper");
 const totalTestimonials = testimonialDots.length;
 let currentTestimonial = 0;
 
 function goToTestimonial(index) {
+  if (!testimonialsTrack || totalTestimonials === 0) return;
   if (index < 0) index = totalTestimonials - 1;
   if (index >= totalTestimonials) index = 0;
 
@@ -171,39 +173,43 @@ function goToTestimonial(index) {
   });
 }
 
-testimonialDots.forEach((dot, index) => {
-  dot.addEventListener("click", () => {
-    goToTestimonial(index);
-  });
-});
-
-testimonialPrev.addEventListener("click", () => {
-  goToTestimonial(currentTestimonial - 1);
-});
-
-testimonialNext.addEventListener("click", () => {
-  goToTestimonial(currentTestimonial + 1);
-});
-
-// Auto-advance testimonials every 6 seconds
-let testimonialAutoPlay = setInterval(() => {
-  goToTestimonial(currentTestimonial + 1);
-}, 6000);
-
-// Pause auto-play on hover
-document
-  .querySelector(".testimonials-wrapper")
-  .addEventListener("mouseenter", () => {
-    clearInterval(testimonialAutoPlay);
+if (testimonialsTrack && totalTestimonials > 0) {
+  testimonialDots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      goToTestimonial(index);
+    });
   });
 
-document
-  .querySelector(".testimonials-wrapper")
-  .addEventListener("mouseleave", () => {
-    testimonialAutoPlay = setInterval(() => {
+  if (testimonialPrev) {
+    testimonialPrev.addEventListener("click", () => {
+      goToTestimonial(currentTestimonial - 1);
+    });
+  }
+
+  if (testimonialNext) {
+    testimonialNext.addEventListener("click", () => {
       goToTestimonial(currentTestimonial + 1);
-    }, 6000);
-  });
+    });
+  }
+
+  // Auto-advance testimonials every 6 seconds
+  let testimonialAutoPlay = setInterval(() => {
+    goToTestimonial(currentTestimonial + 1);
+  }, 6000);
+
+  if (testimonialsWrapper) {
+    // Pause auto-play on hover
+    testimonialsWrapper.addEventListener("mouseenter", () => {
+      clearInterval(testimonialAutoPlay);
+    });
+
+    testimonialsWrapper.addEventListener("mouseleave", () => {
+      testimonialAutoPlay = setInterval(() => {
+        goToTestimonial(currentTestimonial + 1);
+      }, 6000);
+    });
+  }
+}
 
 // Form submission
 const contactForm = document.getElementById("contactForm");
