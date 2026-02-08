@@ -25,22 +25,12 @@ https://templatemo.com/tm-610-aurum-gold
     <nav class="nav" id="navbar">
       <div class="container">
         <div class="nav-inner">
-          <a href="#" class="logo">Aurum <span>Gold</span></a>
-          <!-- <ul class="nav-links">
-            <li><a href="#services">Services</a></li>
-            <li><a href="#why-gold">Why Gold</a></li>
-            <li><a href="#products">Products</a></li>
-            <li><a href="#testimonials">Reviews</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul> -->
-          <!-- <div class="nav-cta">
-            <a href="#" class="btn btn-outline">Sell Gold</a>
-            <a href="#" class="btn btn-primary">Buy Gold</a>
-          </div> -->
           <button
             class="mobile-menu-btn"
             id="mobileMenuBtn"
             aria-label="Open Menu"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
           >
             <span></span>
             <span></span>
@@ -54,7 +44,13 @@ https://templatemo.com/tm-610-aurum-gold
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
+    <div
+      class="mobile-menu"
+      id="mobileMenu"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    >
       <button
         class="mobile-menu-close"
         id="mobileMenuClose"
@@ -86,7 +82,7 @@ https://templatemo.com/tm-610-aurum-gold
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="hero">
       <div class="container">
         <div class="hero-grid">
           <div class="hero-content">
@@ -94,37 +90,75 @@ https://templatemo.com/tm-610-aurum-gold
               id="movable-logo"
               class="movable-logo"
               src="/images/logo.png"
-              alt=""
+              alt="Aurum Gold"
             />
             <div
               class="hero-actions movable-action nav-inner"
               id="movable-action"
             >
               <ul class="nav-links">
-                <a href="#services" class="action-group action-group-child-up2">
-                  <img src="/images/tiresIcon.png" class="action-icon" alt="" />
-                  <div class="btn btn-primary">Services</div>
-                </a>
-
-                <a href="#services" class="action-group action-group-child-up1">
-                  <img src="/images/tiresIcon.png" class="action-icon" alt="" />
-                  <div class="btn btn-primary">Services</div>
-                </a>
-
-                <a href="#services" class="action-group">
-                  <img src="/images/tiresIcon.png" class="action-icon" alt="" />
-                  <div class="btn btn-primary">Services</div>
-                </a>
-
-                <a href="#services" class="action-group action-group-child-up1">
-                  <img src="/images/tiresIcon.png" class="action-icon" alt="" />
-                  <div class="btn btn-primary">Services</div>
-                </a>
-
-                <a href="#services" class="action-group action-group-child-up2">
-                  <img src="/images/tiresIcon.png" class="action-icon" alt="" />
-                  <div class="btn btn-primary">Services</div>
-                </a>
+                <li>
+                  <a
+                    href="#services"
+                    class="action-group action-group-child-up2"
+                  >
+                    <img
+                      src="/images/tiresIcon.png"
+                      class="action-icon"
+                      alt=""
+                    />
+                    <span class="btn btn-primary">Services</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#why-gold"
+                    class="action-group action-group-child-up1"
+                  >
+                    <img
+                      src="/images/tiresIcon.png"
+                      class="action-icon"
+                      alt=""
+                    />
+                    <span class="btn btn-primary">Why Gold</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#products" class="action-group">
+                    <img
+                      src="/images/tiresIcon.png"
+                      class="action-icon"
+                      alt=""
+                    />
+                    <span class="btn btn-primary">Products</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#testimonials"
+                    class="action-group action-group-child-up1"
+                  >
+                    <img
+                      src="/images/tiresIcon.png"
+                      class="action-icon"
+                      alt=""
+                    />
+                    <span class="btn btn-primary">Reviews</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#contact"
+                    class="action-group action-group-child-up2"
+                  >
+                    <img
+                      src="/images/tiresIcon.png"
+                      class="action-icon"
+                      alt=""
+                    />
+                    <span class="btn btn-primary">Contact</span>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

@@ -12,17 +12,16 @@ https://templatemo.com/tm-609-crypto-vault
 const navbar = document.getElementById("navbar");
 const movableAction = document.getElementById("movable-action");
 const movableLogo = document.getElementById("movable-logo");
-window.addEventListener("scroll", () => {
-  if (window.scrollY > window.innerHeight / 3) {
-    navbar.classList.add("scrolled");
-    movableAction.classList.add("scrolled");
-    movableLogo.classList.add("scrolled");
-  } else {
-    navbar.classList.remove("scrolled");
-    movableAction.classList.remove("scrolled");
-    movableLogo.classList.remove("scrolled");
-  }
-});
+
+function toggleScrollState() {
+  const shouldShrink = window.scrollY > window.innerHeight / 3;
+  if (navbar) navbar.classList.toggle("scrolled", shouldShrink);
+  if (movableAction) movableAction.classList.toggle("scrolled", shouldShrink);
+  if (movableLogo) movableLogo.classList.toggle("scrolled", shouldShrink);
+}
+
+window.addEventListener("scroll", toggleScrollState);
+window.addEventListener("load", toggleScrollState);
 
 // Mobile Menu
 const mobileMenuBtn = document.getElementById("mobileMenuBtn");
@@ -30,24 +29,50 @@ const mobileMenu = document.getElementById("mobileMenu");
 const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
 const mobileMenuClose = document.getElementById("mobileMenuClose");
 const mobileNavLinks = document.querySelectorAll(".mobile-nav-links a");
+let lastFocusedElement = null;
+
+function getFocusableElements() {
+  if (!mobileMenu) return [];
+  return Array.from(
+    mobileMenu.querySelectorAll(
+      'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])',
+    ),
+  );
+}
 
 function openMobileMenu() {
+  if (!mobileMenu || !mobileMenuOverlay || !mobileMenuBtn) return;
+  lastFocusedElement = document.activeElement;
   mobileMenu.classList.add("open");
   mobileMenuOverlay.classList.add("open");
   mobileMenuBtn.classList.add("active");
   document.body.classList.add("menu-open");
+  mobileMenu.setAttribute("aria-hidden", "false");
+  mobileMenuBtn.setAttribute("aria-expanded", "true");
+
+  const focusable = getFocusableElements();
+  if (focusable.length > 0) {
+    focusable[0].focus();
+  }
 }
 
 function closeMobileMenu() {
+  if (!mobileMenu || !mobileMenuOverlay || !mobileMenuBtn) return;
   mobileMenu.classList.remove("open");
   mobileMenuOverlay.classList.remove("open");
   mobileMenuBtn.classList.remove("active");
   document.body.classList.remove("menu-open");
+  mobileMenu.setAttribute("aria-hidden", "true");
+  mobileMenuBtn.setAttribute("aria-expanded", "false");
+  if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+    lastFocusedElement.focus();
+  }
 }
 
-mobileMenuBtn.addEventListener("click", openMobileMenu);
-mobileMenuClose.addEventListener("click", closeMobileMenu);
-mobileMenuOverlay.addEventListener("click", closeMobileMenu);
+if (mobileMenuBtn) mobileMenuBtn.addEventListener("click", openMobileMenu);
+if (mobileMenuClose) mobileMenuClose.addEventListener("click", closeMobileMenu);
+if (mobileMenuOverlay)
+  mobileMenuOverlay.addEventListener("click", closeMobileMenu);
 
 // Close mobile menu when clicking a link
 mobileNavLinks.forEach((link) => {
@@ -60,6 +85,24 @@ mobileNavLinks.forEach((link) => {
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeMobileMenu();
+  }
+});
+
+// Focus trap when mobile menu is open
+document.addEventListener("keydown", (e) => {
+  if (!mobileMenu || !mobileMenu.classList.contains("open")) return;
+  if (e.key !== "Tab") return;
+  const focusable = getFocusableElements();
+  if (focusable.length === 0) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
   }
 });
 
@@ -79,7 +122,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 
 // Active menu highlighting on scroll
 const sections = document.querySelectorAll("section[id]");
-const navLinks = document.querySelectorAll(".nav-links a");
+const navLinks = document.querySelectorAll(".nav .nav-links a");
 
 function highlightNavOnScroll() {
   const scrollPos = window.scrollY + 150;
