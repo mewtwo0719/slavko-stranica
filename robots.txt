@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /contacts.php
+Disallow: /contact.php
+
+Sitemap: https://slavagroup-ewiv.com/sitemap.xml
