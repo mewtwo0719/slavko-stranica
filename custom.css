@@ -265,11 +265,19 @@ body {
   padding: 120px 0;
 }
 
-.heatpumps-grid {
+.heatpumps-header {
+  margin-bottom: 44px;
+}
+
+.heatpumps-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
   gap: 48px;
   align-items: start;
+}
+
+.heatpumps-block + .heatpumps-block {
+  margin-top: 24px;
 }
 
 .heatpumps-content h3 {
@@ -295,9 +303,16 @@ body {
 
 .heatpumps-visual img {
   width: 100%;
-  height: auto;
-  border-radius: 20px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 16px;
   display: block;
+}
+
+.heatpumps-visual {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
 }
 
 /* --- Cables section --- */
@@ -353,7 +368,7 @@ body {
 }
 
 @media (max-width: 992px) {
-  .heatpumps-grid,
+  .heatpumps-layout,
   .cables-grid,
   .company-purpose-content {
     grid-template-columns: 1fr;
@@ -371,6 +386,13 @@ body {
 
   .oldtires-small {
     height: 180px;
+  }
+
+  .heatpumps-visual {
+    grid-template-columns: 1fr;
+  }
+  .heatpumps-visual img {
+    height: 100%;
   }
 
   .cables-visual {
