@@ -203,13 +203,33 @@ if (testimonialsTrack && totalTestimonials > 0) {
 
 // Form submission
 const contactForm = document.getElementById("contactForm");
-contactForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  alert(
-    "Thank you for your inquiry! Our team will contact you within 24 hours.",
-  );
-  contactForm.reset();
-});
+if (contactForm) {
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const status = document.getElementById("contactFormStatus");
+    const formData = new URLSearchParams(new FormData(contactForm));
+
+    try {
+      const response = await fetch("contact.php", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.text();
+
+      if (result.trim() === "success") {
+        if (status) status.innerText = "Nachricht erfolgreich gesendet!";
+        contactForm.reset();
+      } else if (status) {
+        status.innerText = result;
+      }
+    } catch (error) {
+      if (status) status.innerText = "Fehler beim Senden der Nachricht.";
+      console.error(error);
+    }
+  });
+}
 
 // Simulate live price updates (for demo purposes)
 function updatePrices() {

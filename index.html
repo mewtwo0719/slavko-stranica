@@ -1203,31 +1203,5 @@
     </footer>
 
     <script src="script.js"></script>
-    <script>
-      document
-        .getElementById("contactForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
-
-          const form = e.target;
-          const status = document.getElementById("contactFormStatus");
-
-          const formData = new FormData(form);
-
-          const response = await fetch("contact.php", {
-            method: "POST",
-            body: formData,
-          });
-
-          const result = await response.text();
-
-          if (result === "success") {
-            status.innerText = "Nachricht erfolgreich gesendet!";
-            form.reset();
-          } else {
-            status.innerText = result;
-          }
-        });
-    </script>
   </body>
 </html>
