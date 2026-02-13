@@ -219,6 +219,46 @@ body {
   display: block;
 }
 
+/* --- Company purpose section --- */
+.company-purpose {
+  padding: 120px 0;
+}
+
+.company-purpose .section-header {
+  max-width: 900px;
+  margin: 0 auto 44px;
+}
+
+.company-purpose-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.company-purpose-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.company-purpose-block h3 {
+  font-size: 20px;
+  margin: 0 0 10px;
+  color: var(--text-primary);
+}
+
+.company-purpose-block p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  text-align: left;
+}
+
+.company-purpose-block p + p {
+  margin-top: 12px;
+}
+
 /* --- Heatpumps section --- */
 .heatpumps {
   padding: 120px 0;
@@ -313,7 +353,8 @@ body {
 
 @media (max-width: 992px) {
   .heatpumps-grid,
-  .cables-grid {
+  .cables-grid,
+  .company-purpose-content {
     grid-template-columns: 1fr;
   }
 
