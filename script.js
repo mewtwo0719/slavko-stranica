@@ -182,22 +182,44 @@ if (testimonialsTrack && totalTestimonials > 0) {
     });
   }
 
+  let testimonialAutoPlay = null;
+
+  function startTestimonialAutoPlay() {
+    if (testimonialAutoPlay !== null) return;
+    testimonialAutoPlay = setInterval(() => {
+      goToTestimonial(currentTestimonial + 1);
+    }, 6000);
+  }
+
+  function stopTestimonialAutoPlay() {
+    if (testimonialAutoPlay === null) return;
+    clearInterval(testimonialAutoPlay);
+    testimonialAutoPlay = null;
+  }
+
   // Auto-advance testimonials every 6 seconds
-  let testimonialAutoPlay = setInterval(() => {
-    goToTestimonial(currentTestimonial + 1);
-  }, 6000);
+  startTestimonialAutoPlay();
 
   if (testimonialsWrapper) {
     // Pause auto-play on hover
-    testimonialsWrapper.addEventListener("mouseenter", () => {
-      clearInterval(testimonialAutoPlay);
-    });
+    testimonialsWrapper.addEventListener("mouseenter", stopTestimonialAutoPlay);
+    testimonialsWrapper.addEventListener("mouseleave", startTestimonialAutoPlay);
 
-    testimonialsWrapper.addEventListener("mouseleave", () => {
-      testimonialAutoPlay = setInterval(() => {
-        goToTestimonial(currentTestimonial + 1);
-      }, 6000);
+    // Keep current slide while mouse/touch is held on desktop/mobile.
+    testimonialsWrapper.addEventListener("pointerdown", stopTestimonialAutoPlay);
+    testimonialsWrapper.addEventListener("pointerup", startTestimonialAutoPlay);
+    testimonialsWrapper.addEventListener(
+      "pointercancel",
+      startTestimonialAutoPlay,
+    );
+    testimonialsWrapper.addEventListener("touchstart", stopTestimonialAutoPlay, {
+      passive: true,
     });
+    testimonialsWrapper.addEventListener("touchend", startTestimonialAutoPlay);
+    testimonialsWrapper.addEventListener(
+      "touchcancel",
+      startTestimonialAutoPlay,
+    );
   }
 }
 
