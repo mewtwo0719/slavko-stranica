@@ -40,7 +40,7 @@
 .movable-logo.scrolled {
   top: 16px;
   left: var(--edge-pad, 24px);
-  transform: translate(0, 0) rotate(360deg) scale(0.32);
+  transform: translate(0, 0) rotate(360deg) scale(0.26);
   z-index: 1050;
 }
 
